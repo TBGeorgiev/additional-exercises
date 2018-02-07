@@ -142,10 +142,8 @@ public class Player {
             System.out.printf("<<Contains %d albums>>%n", playlist.getAlbums().size());
             for (int j = 0; j < playlist.getAlbums().size(); j++) {
                 System.out.printf(" **%s** (%d songs)%n", playlist.getAlbums().get(j).getNameOfAlbum(), playlist.getAlbums().get(j).getSongs().size());
-                //System.out.printf("Contains %d songs:%n", playlist.getAlbums().get(j).getSongs().size());
                 for (int k = 0; k < playlist.getAlbums().get(j).getSongs().size(); k++) {
                     System.out.printf("     %d: %s -> (%s)%n", k+1, playlist.getAlbums().get(j).getSongs().get(k).getSongTitle(), playlist.getAlbums().get(j).getSongs().get(k).getSongDuration());
-                    //System.out.printf("     Duration: %s%n", playlist.getAlbums().get(j).getSongs().get(k).getSongDuration());
                 }
             }
         }
