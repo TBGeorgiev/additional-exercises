@@ -6,7 +6,7 @@ public class MainPlayer {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Do you remember cassette players? This vintage app runs one!");
-        System.out.printf("Press 1 to create a playlist.%nPress 2 to create an album in the current playlist.%nPress 3 to store a song inside an album.%nPress 4 to remove songs from a Playlist.%nPress 5 to list everything.%nPress 6 to switch to another playlist.%nPress 7 to see this message again or press 9 to quit the application.%n");
+        printInstructions();
         Player player = new Player();
         boolean quit = false;
         while (!quit) {
@@ -41,10 +41,14 @@ public class MainPlayer {
                     break;
 
                 default:
-                    System.out.printf("Press 1 to create a playlist.%nPress 2 to create an album in the current playlist.%nPress 3 to store a song inside an album.%nPress 4 to remove songs from a Playlist.%nPress 5 to list everything.%nPress 6 to switch to another playlist.%nPress 7 to see this message again or press 9 to quit the application.%n");
+                    printInstructions();
                     break;
             }
         }
         System.out.println("Program closed.");
+    }
+
+    private static void printInstructions() {
+        System.out.printf("Press 1 to create a playlist.%nPress 2 to create an album in the current playlist.%nPress 3 to store a song inside an album.%nPress 4 to remove songs from a Playlist.%nPress 5 to list everything.%nPress 6 to switch to another playlist.%nPress 7 to see this message again or press 9 to quit the application.%n");
     }
 }
