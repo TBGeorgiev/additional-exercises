@@ -1,2 +1,2 @@
-# udemy-courses-exercises
-Exercises done while taking udemy courses
+# additional-exercises
+Additional exercises
