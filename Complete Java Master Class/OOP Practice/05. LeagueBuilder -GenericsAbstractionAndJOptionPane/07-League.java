@@ -32,7 +32,7 @@ public class G_League<T extends G_TeamList> {
                     "\nTeams: " + teams.get(0).getName() + ", " + teams.get(1).getName()); break;
             case 3: JOptionPane.showMessageDialog(null, "League: " + leagueName +
                     "\nTeams: " + teams.get(0).getName() + ", " + teams.get(1).getName() + ", " +
-                    teams.get(2).getName());
+                    teams.get(2).getName()); break;
         }
 
         Collections.sort(teams);
