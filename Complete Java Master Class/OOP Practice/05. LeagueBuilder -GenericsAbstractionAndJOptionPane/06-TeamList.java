@@ -11,6 +11,10 @@ public class G_TeamList<T extends G_AbstractTeam> implements Comparable<G_TeamLi
 
     private ArrayList<T> members;
 
+    public ArrayList<T> getMembers() {
+        return members;
+    }
+
     public G_TeamList(String name) {
         this.name = name;
         this.members = new ArrayList<>();
