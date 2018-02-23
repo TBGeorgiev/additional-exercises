@@ -38,9 +38,13 @@ public class GenericMain {
                     backToMainMenu = false;
                     while (!backToMainMenu) {
                         String name = JOptionPane.showInputDialog(
-                                "Enter player name or press \"Cancel\" to return to the main menu:");
+                                "Enter player name or press \"Cancel\" to return to the Main Menu:");
                         if (name == null) {
                             break;
+                        }
+                        else if (name.length() == 0) {
+                            JOptionPane.showMessageDialog(null, "Cannot add an empty player!", "Error", JOptionPane.ERROR_MESSAGE);
+                            continue;
                         }
                         Object[] possibilities = {team1Name, team2Name, team3Name};
                         String toSelect = (String) JOptionPane.showInputDialog(null,
@@ -116,11 +120,20 @@ public class GenericMain {
     }
 
     private static G_League entryMenu() {
-        String leagueName = JOptionPane.showInputDialog(null, "Please enter a name for the League: ", "League", JOptionPane.INFORMATION_MESSAGE);
-        if (leagueName == null) {
-            System.exit(0);
+        String leagueName;
+        while (true) {
+            leagueName = JOptionPane.showInputDialog(null, "Please enter a name for the League: ", "League", JOptionPane.INFORMATION_MESSAGE);
+            if (leagueName == null) {
+                int exitPoint = JOptionPane.showConfirmDialog(null,
+                        "Are you sure you want to quit?", "Confirm Quit", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                if (exitPoint == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+            else {
+                break;
+            }
         }
-        G_League league = new G_League(leagueName);
-        return league;
+        return new G_League(leagueName);
     }
 }
