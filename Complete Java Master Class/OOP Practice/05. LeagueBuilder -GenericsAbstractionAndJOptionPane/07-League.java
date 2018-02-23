@@ -21,7 +21,7 @@ public class G_League<T extends G_TeamList> {
 
     public void listTeamsSorted() {
         if (teams.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No teams in the list!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No teams in the list! Returning to main menu.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int teamSize = teams.size();
