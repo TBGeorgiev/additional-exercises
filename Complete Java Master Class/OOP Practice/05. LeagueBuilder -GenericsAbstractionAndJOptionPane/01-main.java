@@ -53,16 +53,14 @@ public class GenericMain {
                                 null, possibilities, possibilities[0]);
 
                         if (toSelect == null) {
-                            JOptionPane.showMessageDialog(null, "Player not added!", "Cancel", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Player NOT added!", "Cancel", JOptionPane.WARNING_MESSAGE);
                             backToMainMenu = true;
                         } else if (toSelect.equals(team1Name)) {
-                            firstTeamTeamList.addPlayer(new G_FirstTeam(name), name);
+                            firstTeamTeamList.addPlayer(new G_FirstTeam(name), name, team1Name);
                         } else if (toSelect.equals(team2Name)) {
-                            secondTeamTeamList.addPlayer(new G_SecondTeam(name), name);
+                            secondTeamTeamList.addPlayer(new G_SecondTeam(name), name, team2Name);
                         } else if (toSelect.equals(team3Name)) {
-                            thirdTeamTeamList.addPlayer(new G_ThirdTeam(name), name);
-                        } else if (toSelect.equals(team3Name)) {
-                            thirdTeamTeamList.addPlayer(new G_ThirdTeam(name), name);
+                            thirdTeamTeamList.addPlayer(new G_ThirdTeam(name), name, team3Name);
                         }
                     }
                     break;
