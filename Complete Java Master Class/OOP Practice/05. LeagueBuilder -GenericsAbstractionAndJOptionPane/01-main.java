@@ -10,14 +10,11 @@ public class GenericMain {
             String team3Name = "VolleyBall Team";
 
             G_League league = entryMenu();
-            int yesOrNo = JOptionPane.showConfirmDialog(null,
-                    "Do you want to keep the default Teams (Football, " +
-                    "Basketball and Volleyball) or do you want to create new ones?\nYes (create) / No (keep default)",
-                    "Confirm selection", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int defaultOrNewTeams = getDefaultOrNewTeams();
             G_TeamList<G_FirstTeam> firstTeamTeamList = new G_TeamList<>(team1Name);
             G_TeamList<G_SecondTeam> secondTeamTeamList = new G_TeamList<>(team2Name);
             G_TeamList<G_ThirdTeam> thirdTeamTeamList = new G_TeamList<>(team3Name);
-            if (yesOrNo == JOptionPane.YES_OPTION) {
+            if (defaultOrNewTeams == JOptionPane.YES_OPTION) {
                 team1Name = JOptionPane.showInputDialog("Enter the name of Team 1:");
                 firstTeamTeamList = new G_TeamList<>(team1Name);
                 team2Name = JOptionPane.showInputDialog("Enter the name of Team 2:");
@@ -31,11 +28,7 @@ public class GenericMain {
             boolean quit = false;
 
             while (!quit) {
-                String[] firstPossibilities = {"1: Add a player", "2: List all teams and their results",
-                        "3: Quit the application"};
-                String menuInputInGui = (String) JOptionPane.showInputDialog(null,
-                        "Please choose an option from the menu below:", "Selection",
-                        JOptionPane.INFORMATION_MESSAGE, null, firstPossibilities, firstPossibilities[0]);
+                String menuInputInGui = mainMenuOptions();
                 if (menuInputInGui == null) {
                     JOptionPane.showMessageDialog(null, "Please make a selection!", "Error", JOptionPane.ERROR_MESSAGE);
                     continue;
@@ -98,6 +91,21 @@ public class GenericMain {
             System.exit(0);
         }
 
+    }
+
+    private static String mainMenuOptions() {
+        String[] firstPossibilities = {"1: Add a player", "2: List all teams and their results",
+                "3: Quit the application"};
+        return (String) JOptionPane.showInputDialog(null,
+                "Please choose an option from the menu below:", "Selection",
+                JOptionPane.INFORMATION_MESSAGE, null, firstPossibilities, firstPossibilities[0]);
+    }
+
+    private static int getDefaultOrNewTeams() {
+        return JOptionPane.showConfirmDialog(null,
+                        "Do you want to keep the default Teams (Football, " +
+                        "Basketball and Volleyball) or do you want to create new ones?\nYes (create) / No (keep default)",
+                        "Confirm selection", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     }
 
     private static G_League entryMenu() {
