@@ -4,6 +4,8 @@ public class GenericMain {
 
     public static void main(String[] args) {
 
+        JOptionPane.showMessageDialog(null, "Welcome to LeagueBuilder v0.001 pre-Alpha!", "Hello World!", JOptionPane.INFORMATION_MESSAGE);
+
         String team1Name = "Football Team";
         String team2Name = "Basketball Team";
         String team3Name = "VolleyBall Team";
@@ -41,8 +43,7 @@ public class GenericMain {
                                 "Enter player name or press \"Cancel\" to return to the Main Menu:");
                         if (name == null) {
                             break;
-                        }
-                        else if (name.length() == 0) {
+                        } else if (name.length() == 0) {
                             JOptionPane.showMessageDialog(null, "Cannot add an empty player!", "Error", JOptionPane.ERROR_MESSAGE);
                             continue;
                         }
@@ -51,20 +52,16 @@ public class GenericMain {
                                 "Choose a team: ", "Selection", JOptionPane.INFORMATION_MESSAGE,
                                 null, possibilities, possibilities[0]);
 
-                        if(toSelect == null) {
+                        if (toSelect == null) {
                             JOptionPane.showMessageDialog(null, "Player not added!", "Cancel", JOptionPane.WARNING_MESSAGE);
                             backToMainMenu = true;
-                        }
-                        else if (toSelect.equals(team1Name)) {
+                        } else if (toSelect.equals(team1Name)) {
                             firstTeamTeamList.addPlayer(new G_FirstTeam(name), name);
-                        }
-                        else if (toSelect.equals(team2Name)) {
+                        } else if (toSelect.equals(team2Name)) {
                             secondTeamTeamList.addPlayer(new G_SecondTeam(name), name);
-                        }
-                        else if (toSelect.equals(team3Name)) {
+                        } else if (toSelect.equals(team3Name)) {
                             thirdTeamTeamList.addPlayer(new G_ThirdTeam(name), name);
-                        }
-                        else if (toSelect.equals(team3Name)) {
+                        } else if (toSelect.equals(team3Name)) {
                             thirdTeamTeamList.addPlayer(new G_ThirdTeam(name), name);
                         }
                     }
@@ -80,8 +77,7 @@ public class GenericMain {
                     if (exitPoint == JOptionPane.YES_OPTION) {
                         quit = true;
                         break;
-                    }
-                    else {
+                    } else {
                         break;
                     }
 
@@ -114,9 +110,9 @@ public class GenericMain {
 
     private static int getDefaultOrNewTeams() {
         return JOptionPane.showConfirmDialog(null,
-                        "Do you want to keep the default Teams (Football, " +
+                "Do you want to keep the default Teams (Football, " +
                         "Basketball and Volleyball) or do you want to create new ones?\nYes (create) / No (keep default)",
-                        "Confirm selection", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                "Confirm selection", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     }
 
     private static G_League entryMenu() {
@@ -129,8 +125,7 @@ public class GenericMain {
                 if (exitPoint == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }
-            }
-            else {
+            } else {
                 break;
             }
         }
