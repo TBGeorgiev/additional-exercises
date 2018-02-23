@@ -57,9 +57,10 @@ public class G_TeamList<T extends G_AbstractTeam> implements Comparable<G_TeamLi
         return false;
     }
 
-    public void addPlayer(T player, String name) {
+    public void addPlayer(T player, String name, String teamName) {
         if (!ifExists(name)) {
             members.add(player);
+            JOptionPane.showMessageDialog(null, "" + name + " added successfully to the " + teamName + " team!");
         }
     }
 
