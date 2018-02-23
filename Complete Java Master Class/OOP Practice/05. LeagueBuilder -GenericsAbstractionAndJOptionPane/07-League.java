@@ -20,11 +20,23 @@ public class G_League<T extends G_TeamList> {
     }
 
     public void listTeamsSorted() {
-        JOptionPane.showMessageDialog(null, "League: " + leagueName +
-                "\nTeams: " + teams.get(0).getName() + ", " + teams.get(1).getName() + ", " +
-                teams.get(2).getName());
+        if (teams.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No teams in the list!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int teamSize = teams.size();
+        switch (teamSize) {
+            case 1: JOptionPane.showMessageDialog(null, "League: " + leagueName +
+                    "\nTeam: " + teams.get(0).getName()); break;
+            case 2: JOptionPane.showMessageDialog(null, "League: " + leagueName +
+                    "\nTeams: " + teams.get(0).getName() + ", " + teams.get(1).getName()); break;
+            case 3: JOptionPane.showMessageDialog(null, "League: " + leagueName +
+                    "\nTeams: " + teams.get(0).getName() + ", " + teams.get(1).getName() + ", " +
+                    teams.get(2).getName());
+        }
+
         Collections.sort(teams);
-        for (int i = 0; i < teams.size(); i++) {
+        for (int i = 0; i < teamSize; i++) {
             teams.get(i).randomizeResults();
             JOptionPane.showMessageDialog(null, "" +
                     teams.get(i).getName() + " - " + teams.get(i).numPlayers() +
