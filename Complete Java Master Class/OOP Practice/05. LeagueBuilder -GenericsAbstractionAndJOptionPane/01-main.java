@@ -123,7 +123,10 @@ public class GenericMain {
                 if (exitPoint == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }
-            } else {
+            } else if (leagueName.length() == 0) {
+                JOptionPane.showMessageDialog(null, "Cannot add a League without a name!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
                 break;
             }
         }
