@@ -9,6 +9,22 @@ public class G_TeamList<T extends G_AbstractTeam> implements Comparable<G_TeamLi
     private int lost = 0;
     private int tied = 0;
 
+    public void setPlayed(int played) {
+        this.played = played;
+    }
+
+    public void setWon(int won) {
+        this.won = won;
+    }
+
+    public void setLost(int lost) {
+        this.lost = lost;
+    }
+
+    public void setTied(int tied) {
+        this.tied = tied;
+    }
+
     private ArrayList<T> members;
 
     public ArrayList<T> getMembers() {
@@ -24,14 +40,14 @@ public class G_TeamList<T extends G_AbstractTeam> implements Comparable<G_TeamLi
         StringBuilder sb = new StringBuilder("");
         for (int i = 0; i < members.size(); i++) {
             String name = members.get(i).getName();
-            String toAppend = "" + (i + 1) + " - Name: " + name + " Age: " + members.get(i).getAge() + "\n";
+            String toAppend = "\t" + (i + 1) + " - Name: " + name + " Age: " + members.get(i).getAge() + "\n";
             sb.append(toAppend);
         }
         return sb.toString();
     }
 
     public String getResultsFromRand() {
-        return "Total matches: " + this.played + "\nWon: " + this.won + "\nLost: " + this.lost + "\nDraw: " + this.tied;
+        return "Total matches: " + this.played + "\n\tWon: " + this.won + "\n\tLost: " + this.lost + "\n\tDraw: " + this.tied;
     }
 
     public void randomizeResults() {
@@ -57,10 +73,12 @@ public class G_TeamList<T extends G_AbstractTeam> implements Comparable<G_TeamLi
         return false;
     }
 
-    public void addPlayer(T player, String name, String teamName) {
+    public void addPlayer(T player, String name, String teamName, boolean isLoaded) {
         if (!ifExists(name)) {
             members.add(player);
-            JOptionPane.showMessageDialog(null, "" + name + " added successfully to the " + teamName + " team!");
+            if (!isLoaded) {
+                JOptionPane.showMessageDialog(null, "" + name + " added successfully to the " + teamName + " team!");
+            }
         }
     }
 
