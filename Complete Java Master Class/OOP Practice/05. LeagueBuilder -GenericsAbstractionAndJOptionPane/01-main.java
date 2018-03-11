@@ -5,7 +5,7 @@ public class GenericMain {
 
     private static boolean defaultTeams = true;
 
-    private static boolean corruptedList = false;
+//    private static boolean corruptedList = false;
 
     private static String teamOneName;
     private static String teamTwoName;
@@ -21,7 +21,7 @@ public class GenericMain {
         String team3Name = "VolleyBall Team";
 
 
-        G_League league = entryMenu();
+        G_League<G_TeamList> league = entryMenu();
 
         //league.loadFiles();                 //loading for test only
 
@@ -51,7 +51,7 @@ public class GenericMain {
 
     }
 
-    private static void mainMenuMethods(G_League league, G_TeamList<G_FirstTeam> firstTeamTeamList, G_TeamList<G_SecondTeam> secondTeamTeamList, G_TeamList<G_ThirdTeam> thirdTeamTeamList) {
+    private static void mainMenuMethods(G_League<G_TeamList> league, G_TeamList<G_FirstTeam> firstTeamTeamList, G_TeamList<G_SecondTeam> secondTeamTeamList, G_TeamList<G_ThirdTeam> thirdTeamTeamList) {
         boolean backToMainMenu;
 
         boolean quit = false;
@@ -127,7 +127,7 @@ public class GenericMain {
         System.exit(0);
     }
 
-    private static void listingOfResults(G_League league, G_TeamList<G_FirstTeam> firstTeamTeamList, G_TeamList<G_SecondTeam> secondTeamTeamList, G_TeamList<G_ThirdTeam> thirdTeamTeamList) {
+    private static void listingOfResults(G_League<G_TeamList> league, G_TeamList<G_FirstTeam> firstTeamTeamList, G_TeamList<G_SecondTeam> secondTeamTeamList, G_TeamList<G_ThirdTeam> thirdTeamTeamList) {
         if (!firstTeamTeamList.getMembers().isEmpty()) {
             league.addToLeague(firstTeamTeamList);
         }
@@ -140,7 +140,7 @@ public class GenericMain {
         league.listTeamsSorted();
     }
 
-    private static void listingOfResultsNew(G_League league, G_TeamList<G_FirstTeam> firstTeamTeamList, G_TeamList<G_SecondTeam> secondTeamTeamList, G_TeamList<G_ThirdTeam> thirdTeamTeamList) {
+    private static void listingOfResultsNew(G_League<G_TeamList> league, G_TeamList<G_FirstTeam> firstTeamTeamList, G_TeamList<G_SecondTeam> secondTeamTeamList, G_TeamList<G_ThirdTeam> thirdTeamTeamList) {
         if (!firstTeamTeamList.getMembers().isEmpty()) {
             league.addToLeague(firstTeamTeamList);
         }
@@ -167,7 +167,7 @@ public class GenericMain {
                 "Confirm selection", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
     }
 
-    private static G_League entryMenu() {
+    private static G_League<G_TeamList> entryMenu() {
         String leagueName;
         Object[] selection = {"Create new League", "Load previous League"};
         String toSelect = (String) JOptionPane.showInputDialog(null,
@@ -179,11 +179,11 @@ public class GenericMain {
         if (toSelect.equals("Load previous League")) {
             if (!G_League.checkList()) {
                 JOptionPane.showMessageDialog(null, "Save file is missing or corrupted!");
-                corruptedList = true;
+//                corruptedList = true;
                 System.exit(0);
             }
             String nameOfLeague = G_League.getLeagueName();
-            G_League league = new G_League(nameOfLeague);
+            G_League<G_TeamList> league = new G_League<>(nameOfLeague);
             league.loadFiles();
             enterLoadedInformation(league);
             return league;
@@ -204,10 +204,10 @@ public class GenericMain {
                 break;
             }
         }
-        return new G_League(leagueName);
+        return new G_League<>(leagueName);
     }
 
-    private static void enterLoadedInformation(G_League league) {
+    private static void enterLoadedInformation(G_League<G_TeamList> league) {
         ArrayList<String> teams = new ArrayList<>(league.getTeamNames());
         int teamSize = teams.size();
         if (teamSize < 1) {
@@ -226,10 +226,17 @@ public class GenericMain {
 
         G_TeamList<G_FirstTeam> firstTeamTeamList = new G_TeamList<>(teams.get(0));
         teamOneName = teams.get(0);
+        if (teams.get(0) != null) {
+        }
         G_TeamList<G_SecondTeam> secondTeamTeamList = new G_TeamList<>(teams.get(1));
         teamTwoName = teams.get(1);
+        if (teams.get(1) != null) {
+        }
         G_TeamList<G_ThirdTeam> thirdTeamTeamList = new G_TeamList<>(teams.get(2));
         teamThreeName = teams.get(2);
+        if (teams.get(2) != null) {
+        }
+
 
 
 
