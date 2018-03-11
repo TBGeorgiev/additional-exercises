@@ -9,6 +9,10 @@ public abstract class G_AbstractTeam {
         this.age = ThreadLocalRandom.current().nextInt(18, 40);
     }
 
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public String getName() {
         return name;
     }
@@ -16,4 +20,5 @@ public abstract class G_AbstractTeam {
     public int getAge() {
         return age;
     }
+
 }
