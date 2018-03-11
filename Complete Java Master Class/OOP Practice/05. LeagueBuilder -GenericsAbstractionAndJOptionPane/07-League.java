@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.io.*;
 import java.util.*;
 
-public class G_League<T extends G_TeamList> {
+public class G_League<T extends G_TeamList> implements Serializable {
     private static String leagueName;
     private ArrayList<T> teams;
     private boolean toSave = false;
@@ -130,8 +130,7 @@ public class G_League<T extends G_TeamList> {
 
     private int numberOfMembersFromString(String string) {
         String[] split = string.split("\\s+");
-        int number = Integer.parseInt(split[2]);
-        return number;
+        return Integer.parseInt(split[2]);
     }
 
     private String findName(String string) {
@@ -154,19 +153,21 @@ public class G_League<T extends G_TeamList> {
         Collections.sort(teams);
         try (BufferedWriter locFile = new BufferedWriter(new FileWriter(leagueSaveFileName))) {
             locFile.write("League: " + leagueName + "\n");
-            for (int i = 0; i < teams.size(); i++) {
-                locFile.write("Team name: " + teams.get(i).getName() + " ("
-                        + teams.get(i).getMembers().size() + " players) :\n");
-                locFile.write(teams.get(i).getNames() + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n"
-                        + teams.get(i).getResultsFromRand() + "\n");
+            for (T team : teams) {
+                locFile.write("Team name: " + team.getName() + " ("
+                        + team.getMembers().size() + " players) :\n");
+                locFile.write(team.getNames() + "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n"
+                        + team.getResultsFromRand() + "\n");
                 locFile.write("====================================\n");
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (!savedLeagueNames.contains(leagueName)) {
+            savedLeagueNames.add(leagueName);
+        }
         loadAndPopulateLeagueList();
-        savedLeagueNames.add(leagueName);
         Collections.sort(savedLeagueNames);
         try (BufferedWriter locFile = new BufferedWriter(new FileWriter("leagueList.txt"))) {
             for (String savedLeagueName : savedLeagueNames) {
@@ -183,7 +184,9 @@ public class G_League<T extends G_TeamList> {
         try (Scanner scanner = new Scanner(new BufferedReader(new FileReader("leagueList.txt")))) {
             while (scanner.hasNextLine()) {
                 String league = scanner.nextLine();
-                savedLeagueNames.add(league);
+                if (!savedLeagueNames.contains(league)) {
+                    savedLeagueNames.add(league);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -207,8 +210,8 @@ public class G_League<T extends G_TeamList> {
 
     }
 
-    public G_League(String leagueName) {
-        this.leagueName = leagueName;
+    public G_League(String nameOfTheLeague) {
+        leagueName = nameOfTheLeague;
         this.teams = new ArrayList<>();
     }
 
@@ -243,11 +246,11 @@ public class G_League<T extends G_TeamList> {
                     teams.get(2).getName()); break;
         }
 
-        for (int i = 0; i < teamSize; i++) {
+        for (T team : teams) {
             JOptionPane.showMessageDialog(null, "" +
-                    teams.get(i).getName() + " - " + teams.get(i).numPlayers() +
-                    "\n" + teams.get(i).getResultsFromRand() + "\nPlayers:\n" +
-                    teams.get(i).getNames());
+                    team.getName() + " - " + team.numPlayers() +
+                    "\n" + team.getResultsFromRand() + "\nPlayers:\n" +
+                    team.getNames());
         }
 
     }
