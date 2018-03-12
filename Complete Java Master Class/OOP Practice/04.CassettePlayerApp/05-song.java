@@ -1,4 +1,6 @@
-public class Song {
+import java.io.Serializable;
+
+public class Song implements Serializable {
     private String songTitle;
     private String songDuration;
 
@@ -15,4 +17,3 @@ public class Song {
         return songDuration;
     }
 }
-
