@@ -1,8 +1,9 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 
-public class MainPlayer {
+public class MainPlayer implements Serializable {
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Player player = new Player();
@@ -45,6 +46,11 @@ public class MainPlayer {
                             case 6:
                                 if (checkIfPlaylistIsEmpty(player)) break;
                                 player.switchPlayList();
+                                break;
+
+                            case 7:
+                                if (checkIfPlaylistIsEmpty(player)) break;
+                                player.saveFile();
                                 break;
 
                             case 9:
@@ -92,6 +98,6 @@ public class MainPlayer {
     }
 
     private static void printInstructions() {
-        System.out.printf("Press 1 to create a playlist.%nPress 2 to create an album in the current playlist.%nPress 3 to store a song inside an album.%nPress 4 to remove songs from a Playlist.%nPress 5 to list everything.%nPress 6 to switch to another playlist.%nPress 7 to see this message again.%nPress 9 to go back to the main menu.%n");
+        System.out.printf("Press 1 to create a playlist.%nPress 2 to create an album in the current playlist.%nPress 3 to store a song inside an album.%nPress 4 to remove songs from a Playlist.%nPress 5 to list everything.%nPress 6 to switch to another playlist.%nPress 7 to save your playlist/s.%nPress 8 to see this message again.%nPress 9 to go back to the main menu.%n");
     }
 }
