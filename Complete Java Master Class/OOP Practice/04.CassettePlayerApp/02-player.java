@@ -1,20 +1,58 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Player {
-    private ArrayList<Playlist> playlists;
+public class Player implements Serializable {
+    private static ArrayList<Playlist> playlists = new ArrayList<>();
     private BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    private ArrayList<String> listOfPlaylists;
+    private static ArrayList<String> listOfPlaylists = new ArrayList<>();
     private String currentPlaylist;
+
+    private long serialVersionUID = 1L;
+
+    static {
+        try(ObjectInputStream locFile = new ObjectInputStream(new BufferedInputStream(new FileInputStream("playlists.dat")))) {
+            boolean eof = false;
+            while (!eof) {
+                try {
+                    Playlist playlist = (Playlist) locFile.readObject();
+                    playlists.add(playlist);
+                    listOfPlaylists.add(playlist.getPlaylistName());
+
+
+                } catch (ClassNotFoundException e) {
+                    eof = true;
+                    //e.printStackTrace();
+                }
+            }
+
+        } catch (FileNotFoundException e) {
+            //e.printStackTrace();
+        } catch (IOException e) {
+            //e.printStackTrace();
+        }
+    }
+
+
+
+    public void saveFile() {
+        try(ObjectOutputStream locFile = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("playlists.dat")))) {
+            for (Playlist playlist : playlists) {
+                locFile.writeObject(playlist);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public Player() {
-        this.playlists = new ArrayList<>();
-        this.listOfPlaylists = new ArrayList<>();
+        //this.playlists = new ArrayList<>();
+        //this.listOfPlaylists = new ArrayList<>();
 
     }
 
@@ -23,14 +61,14 @@ public class Player {
         String playlistName = reader.readLine();
         this.currentPlaylist = playlistName;
         listOfPlaylists.add(playlistName);
-        this.playlists.add(new Playlist(playlistName));
+        playlists.add(new Playlist(playlistName));
         System.out.println("Playlist created.");
     }
 
     public void createPlaylistForChoice(String name) {
         this.currentPlaylist = name;
         listOfPlaylists.add(name);
-        this.playlists.add(new Playlist(name));
+        playlists.add(new Playlist(name));
         System.out.println("Playlist created.");
     }
 
@@ -141,7 +179,7 @@ public class Player {
         }
         System.out.print("Enter playlist number: ");
         int playlistNumber = Integer.parseInt(reader.readLine());
-        Playlist selectedPlaylist = this.playlists.get(playlistNumber - 1);
+        Playlist selectedPlaylist = playlists.get(playlistNumber - 1);
         for (int i = 0; i < selectedPlaylist.getAlbums().size(); i++) {
             System.out.printf("Album %d: %s (%d tracks)%n", i + 1, selectedPlaylist.getAlbums().get(i).getNameOfAlbum(), selectedPlaylist.getAlbums().get(i).getSongs().size());
         }
@@ -174,7 +212,7 @@ public class Player {
         System.out.printf("==Found %d playlists.==%n", playlists.size());
         for (int i = 0; i < playlists.size(); i++) {
             System.out.printf("%d: ^^^^^%s^^^^^%n", i + 1, playlists.get(i).getPlaylistName());
-            Playlist playlist = this.playlists.get(i);
+            Playlist playlist = playlists.get(i);
             if (playlist.getAlbums().size() < 1) {
                 System.out.println("Playlist is empty.");
                 continue;
