@@ -63,7 +63,7 @@ public class Datasource {
 		
 		try {
 			statement = conn.createStatement();
-			results = statement.executeQuery("SELECT * FROM " + TABLE_ARTISTS);
+			results = statement.executeQuery("SELECT * FROM " + TABLE_ARTISTS + " ORDER BY artists.name COLLATE NOCASE");
 			
 			List<Artist> artists = new ArrayList<Artist>();
 			while (results.next()) {
@@ -152,6 +152,7 @@ public class Datasource {
 					+ "WHERE albums.name LIKE '" + name + "'");
 			if (countOfSongs.next()) {
 				if (countOfSongs.getInt(1) > 0) {
+					System.out.println("Listing results for album: " + name);
 					System.out.println("Number of songs: " + countOfSongs.getInt(1));					
 				}
 			}
