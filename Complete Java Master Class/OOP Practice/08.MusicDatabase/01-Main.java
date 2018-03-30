@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,7 +10,6 @@ public class Main {
 
 	public static void main(String[] args) throws SQLException, IOException {
 		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		Datasource datasource = new Datasource();
 		if (!datasource.open()) {
 			System.out.println("Can't open datasource");
@@ -24,35 +21,63 @@ public class Main {
 		
 		while (!quit) {
 			
-			String bandName = JOptionPane.showInputDialog("Enter the name of the band:");
-			listAlbumsOfGroup(bandName, datasource);
-			if (artistFound) {
-				int toListOrNot = JOptionPane.showConfirmDialog(null, "Do you want to list all the tracks of an album?", 
-						null, JOptionPane.YES_NO_OPTION);
-				if (toListOrNot == JOptionPane.YES_OPTION) {
-					String nameOfAlbum = JOptionPane.showInputDialog("Enter the name of the Album: ");
-					boolean albumFound = listSongsOfAlbum(nameOfAlbum, datasource);
-					while (!albumFound) {
-						JOptionPane.showMessageDialog(null, "Incorrect album name, please try again.");
-						nameOfAlbum = JOptionPane.showInputDialog("Enter the name of the Album: ");
-						albumFound = listSongsOfAlbum(nameOfAlbum, datasource);
+			String[] choices = {"List all albums from a band", "List all bands", "Quit"};
+			
+			String choice = (String) JOptionPane.showInputDialog(null, "Please select an option from the main menu below", "Main menu", JOptionPane.DEFAULT_OPTION, null, choices, choices[0]);
+			
+			if (choice == null) {
+				JOptionPane.showMessageDialog(null, "ERROR!", "Warning", JOptionPane.ERROR_MESSAGE);
+				continue;
+			}
+			
+			if (choice.equals("List all bands")) {
+				listArtists(datasource);
+			} else if (choice.equals("List all albums from a band")) {
+				String bandName = JOptionPane.showInputDialog("Enter the name of the band:");
+				if (bandName != null) {
+					listAlbumsOfGroup(bandName, datasource);				
+				}
+				if (artistFound) {
+					int toListOrNot = JOptionPane.showConfirmDialog(null, "Do you want to list all the tracks of an album?", 
+							null, JOptionPane.YES_NO_OPTION);
+					if (toListOrNot == JOptionPane.YES_OPTION) {
+						String nameOfAlbum = JOptionPane.showInputDialog("Enter the name of the Album: ");
+						boolean albumFound = listSongsOfAlbum(nameOfAlbum, datasource);
+						while (!albumFound) {
+							JOptionPane.showMessageDialog(null, "Incorrect album name, please try again.");
+							nameOfAlbum = JOptionPane.showInputDialog("Enter the name of the Album: ");
+							albumFound = listSongsOfAlbum(nameOfAlbum, datasource);
+						}
 					}
+				}
+				
+				int toContinue = JOptionPane.showConfirmDialog(null, "Do you want to look for another bands and albums?",
+						null, JOptionPane.YES_NO_OPTION);
+				if (toContinue == JOptionPane.NO_OPTION) {
+					quit = true;
 				}
 			}
 			
-			int toContinue = JOptionPane.showConfirmDialog(null, "Do you want to look for another bands and albums?",
-					null, JOptionPane.YES_NO_OPTION);
-			if (toContinue == JOptionPane.NO_OPTION) {
+			else {
 				quit = true;
 			}
+			
 		}
 		
 		datasource.close();
 	}
+
+
+	private static void listArtists(Datasource datasource) {
+		List<Artist> artists = datasource.queryArtists();
+		for (Artist artist : artists) {
+			System.out.println(artist.getName());
+		}
+	}
 	
 	
 	private static boolean listSongsOfAlbum(String nameOfAlbum, Datasource datasource)
-			throws IOException, SQLException {
+			throws SQLException {
 		List<Song> songs = datasource.querySongsFromAlbum(nameOfAlbum);
 		for (Song song : songs) {
 			System.out.println("\t" + song.getTrack() + ": " + song.getName());
@@ -65,7 +90,7 @@ public class Main {
 	}
 
 	private static void listAlbumsOfGroup(String name, Datasource datasource)
-			throws IOException, SQLException {
+			throws SQLException {
 		
 		List<Album> albums = datasource.queryAlbumsFromArtist(name);
 		if (albums.isEmpty()) {
